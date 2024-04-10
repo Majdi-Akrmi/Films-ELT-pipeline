@@ -1,0 +1,29 @@
+[0m22:15:36.147547 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x77b4f7544490>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x77b4f7577fd0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x77b4f7539c50>]}
+
+
+============================== 22:15:36.154211 | 302cb2f5-b988-46be-b6dd-ea00b07b6ff3 ==============================
+[0m22:15:36.154211 [info ] [MainThread]: Running with dbt=1.7.11
+[0m22:15:36.155480 [debug] [MainThread]: running dbt with arguments {'printer_width': '80', 'indirect_selection': 'eager', 'log_cache_events': 'False', 'write_json': 'True', 'partial_parse': 'True', 'cache_selected_only': 'False', 'profiles_dir': '/home/majdi/.dbt', 'version_check': 'True', 'fail_fast': 'False', 'log_path': 'logs', 'warn_error': 'None', 'debug': 'False', 'use_colors': 'True', 'use_experimental_parser': 'False', 'no_print': 'None', 'quiet': 'False', 'warn_error_options': 'WarnErrorOptions(include=[], exclude=[])', 'static_parser': 'True', 'invocation_command': 'dbt init', 'introspect': 'True', 'target_path': 'None', 'log_format': 'default', 'send_anonymous_usage_stats': 'True'}
+[0m22:15:53.724770 [debug] [MainThread]: Starter project path: /home/majdi/dbt-env/lib/python3.11/site-packages/dbt/include/starter_project
+[0m22:15:53.734573 [info ] [MainThread]: 
+Your new dbt project "elt_dbt" was created!
+
+For more information on how to configure the profiles.yml file,
+please consult the dbt documentation here:
+
+  https://docs.getdbt.com/docs/configure-your-profile
+
+One more thing:
+
+Need help? Don't hesitate to reach out to us via GitHub issues or on Slack:
+
+  https://community.getdbt.com/
+
+Happy modeling!
+
+[0m22:15:53.735955 [info ] [MainThread]: Setting up your profile.
+[0m22:19:57.905231 [info ] [MainThread]: Profile elt_dbt written to /home/majdi/.dbt/profiles.yml using target's profile_template.yml and your supplied values. Run 'dbt debug' to validate the connection.
+[0m22:19:57.910553 [debug] [MainThread]: Resource report: {"command_name": "init", "command_success": true, "command_wall_clock_time": 261.84183, "process_user_time": 3.614915, "process_kernel_time": 0.34919, "process_mem_max_rss": "95908", "process_in_blocks": "85048", "process_out_blocks": "88"}
+[0m22:19:57.913367 [debug] [MainThread]: Command `dbt init` succeeded at 22:19:57.912701 after 261.85 seconds
+[0m22:19:57.915359 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x77b4f7577fd0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x77b4f7576990>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x77b4f8a7c890>]}
+[0m22:19:57.917380 [debug] [MainThread]: Flushing usage events
