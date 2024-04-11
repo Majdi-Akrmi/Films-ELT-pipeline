@@ -1,6 +1,7 @@
 
 # Films-ELT-pipeline
 
+
 This is end-to-end data engineering project using some of the most powerful technologies like: dbt, Apache Airflow, Airbyte and Docker.
 ## Architecture
 
@@ -9,7 +10,7 @@ This is end-to-end data engineering project using some of the most powerful tech
 
 ## Data Modeling
 
-[![Data-Modeling.png](https://i.postimg.cc/1R04ZZqw/Data-Modeling.png)](https://postimg.cc/K4zmnwQ8)
+[![Data-Modeling.jpg](https://i.postimg.cc/x8GPKF8h/Data-Modeling.jpg)](https://postimg.cc/QKt5DmpJ)
 ## Tech Stack
 
 **Programming Language:** Python, SQL
