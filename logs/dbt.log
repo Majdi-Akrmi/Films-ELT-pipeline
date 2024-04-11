@@ -27,3 +27,23 @@ Happy modeling!
 [0m22:19:57.913367 [debug] [MainThread]: Command `dbt init` succeeded at 22:19:57.912701 after 261.85 seconds
 [0m22:19:57.915359 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x77b4f7577fd0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x77b4f7576990>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x77b4f8a7c890>]}
 [0m22:19:57.917380 [debug] [MainThread]: Flushing usage events
+[0m00:25:47.904292 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x76958279a310>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x76958277bf50>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x76958277be90>]}
+
+
+============================== 00:25:47.912015 | 8d299031-250b-4ce7-9f74-d4998bce81c2 ==============================
+[0m00:25:47.912015 [info ] [MainThread]: Running with dbt=1.7.11
+[0m00:25:47.913288 [debug] [MainThread]: running dbt with arguments {'printer_width': '80', 'indirect_selection': 'eager', 'log_cache_events': 'False', 'write_json': 'True', 'partial_parse': 'True', 'cache_selected_only': 'False', 'warn_error': 'None', 'version_check': 'True', 'fail_fast': 'False', 'log_path': 'logs', 'profiles_dir': '/home/majdi/.dbt', 'debug': 'False', 'use_colors': 'True', 'use_experimental_parser': 'False', 'no_print': 'None', 'quiet': 'False', 'warn_error_options': 'WarnErrorOptions(include=[], exclude=[])', 'introspect': 'True', 'invocation_command': 'dbt debug', 'static_parser': 'True', 'target_path': 'None', 'log_format': 'default', 'send_anonymous_usage_stats': 'True'}
+[0m00:25:47.914382 [info ] [MainThread]: dbt version: 1.7.11
+[0m00:25:47.915118 [info ] [MainThread]: python version: 3.11.7
+[0m00:25:47.915836 [info ] [MainThread]: python path: /home/majdi/dbt-env/bin/python3
+[0m00:25:47.916628 [info ] [MainThread]: os info: Linux-6.5.0-27-generic-x86_64-with-glibc2.38
+[0m00:25:48.722536 [info ] [MainThread]: Using profiles dir at /home/majdi/.dbt
+[0m00:25:48.723495 [info ] [MainThread]: Using profiles.yml file at /home/majdi/.dbt/profiles.yml
+[0m00:25:48.724192 [info ] [MainThread]: Using dbt_project.yml file at /home/majdi/Desktop/ELT_pipeline/dbt_project.yml
+[0m00:25:48.725027 [error] [MainThread]: Encountered an error:
+Internal Error
+  Profile should not be None if loading profile completed
+[0m00:25:48.727796 [debug] [MainThread]: Resource report: {"command_name": "debug", "command_wall_clock_time": 0.89625657, "process_user_time": 3.82176, "process_kernel_time": 0.402081, "process_mem_max_rss": "113052", "process_in_blocks": "117880", "process_out_blocks": "16", "command_success": false}
+[0m00:25:48.728929 [debug] [MainThread]: Command `dbt debug` failed at 00:25:48.728654 after 0.90 seconds
+[0m00:25:48.729707 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7695827cb310>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x769583f55490>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x76958179ae50>]}
+[0m00:25:48.730501 [debug] [MainThread]: Flushing usage events

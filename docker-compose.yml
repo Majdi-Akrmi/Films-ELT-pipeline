@@ -1,0 +1,151 @@
+version: '3'
+
+services:
+  source_postgres:
+    container_name: postgres_source
+    image: postgres:15.6
+    ports:
+      - "5433:5432"
+    networks:
+      - elt_network
+    environment:
+      POSTGRES_DB: source_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: secret
+    volumes:
+      - ./source_db_init/init.sql:/docker-entrypoint-initdb.d/init.sql
+
+  destination_postgres:
+    container_name: postgres_destination
+    image: postgres:15.6
+    ports:
+      - "5434:5432"
+    networks:
+      - elt_network
+    environment:
+      POSTGRES_DB: destination_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: secret
+  #   volumes:
+  #     - destination_db_data:/var/lib/postgresql/data
+
+  # elt_script:
+  #   build:
+  #     context: ./elt_script
+  #     dockerfile: Dockerfile
+  #   command: [ "python", "elt_script.py" ]
+  #   networks:
+  #     - elt_network
+  #   depends_on:
+  #     - source_postgres
+  #     - destination_postgres
+
+  # dbt:
+  #   image: ghcr.io/dbt-labs/dbt-postgres:1.4.7
+  #   command: 
+  #     [
+  #       "run",
+  #       "--profiles-dir",
+  #       "/root",
+  #       "--project-dir",
+  #       "/dbt"
+  #     ]
+  #   networks:
+  #     - elt_network
+  #   volumes:
+  #     - ./elt_dbt:/dbt
+  #     - ~/.dbt:/root
+  #   depends_on:
+  #     - elt_script
+  #   environment:
+  #     DBT_PROFILE: default
+  #     DBT_TARGET: dev
+
+  postgres:
+    container_name: postgres-airflow
+    image: postgres:15.6
+    networks:
+      - elt_network
+    environment:
+      - POSTGRES_USER=airflow
+      - POSTGRES_PASSWORD=airflow
+      - POSTGRES_DB=airflow
+
+  init-airflow:
+    image: apache/airflow:latest
+    depends_on:
+      - postgres
+    networks:
+      - elt_network
+    environment:
+      - AIRFLOW__DATABASE__SQL_ALCHEMY_CONN=postgresql+psycopg2://airflow:airflow@postgres/airflow
+    command: >
+      bash -c "airflow db init &&
+               airflow users create --username airflow --password password --firstname Majdi --lastname Akrmi --role Admin --email akremi.majdi@gmail.com"
+  
+  webserver: 
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    user: root
+    depends_on:
+      - postgres
+    networks:
+      - elt_network
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    volumes:
+      - ./airflow/dags:/opt/airflow/dags
+      - ./elt_script:/opt/airflow/elt_script
+      - ./elt_dbt:/opt/dbt
+      - ~/.dbt:/root/.dbt
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      - LOAD_EX=n
+      - EXECUTOR=Local
+      - AIRFLOW__DATABASE__SQL_ALCHEMY_CONN=postgresql+psycopg2://airflow:airflow@postgres/airflow
+      - AIRFLOW_CONN_DESTINATION_POSTGRES=postgres://postgres:secret@destination_postgres:5434/destination_db
+      - AIRFLOW__CORE__FERNET_KEY=OqXCQyYEpYm_KYzVCpCnNj-zYJTQOrJAAb-TxVLG6I0=
+      - AIRFLOW__WEBSERVER__DEFAULT_USER_USERNAME=airflow
+      - AIRFLOW__WEBSERVER__DEFAULT_USER_PASSWORD=password
+      - AIRFLOW_WWW_USER_USERNAME=airflow
+      - AIRFLOW_WWW_USER_PASSWORD=password
+      - AIRFLOW__WEBSERVER__SECRET_KEY=secret
+    ports:
+      - "8080:8080"
+    command: webserver
+
+  scheduler:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    user: root
+    depends_on:
+      - postgres
+    networks:
+      - elt_network
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    volumes:
+      - ./airflow/dags:/opt/airflow/dags
+      - ./elt_script:/opt/airflow/elt_script
+      - ./elt_dbt:/dbt
+      - ~/.dbt:/root/.dbt
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      - LOAD_EX=n
+      - EXECUTOR=Local
+      - AIRFLOW__DATABASE__SQL_ALCHEMY_CONN=postgresql+psycopg2://airflow:airflow@postgres/airflow
+      - AIRFLOW_CONN_DESTINATION_POSTGRES=postgres://postgres:secret@destination_postgres:5434/destination_db
+      - AIRFLOW__CORE__FERNET_KEY=OqXCQyYEpYm_KYzVCpCnNj-zYJTQOrJAAb-TxVLG6I0=
+      - AIRFLOW__WEBSERVER__SECRET_KEY=secret
+      - AIRFLOW_WWW_USER_USERNAME=airflow
+      - AIRFLOW_WWW_USER_PASSWORD=password
+    command: scheduler
+
+networks:
+  elt_network:
+    driver: bridge
+
+volumes:
+  destination_db_data:
